@@ -4,19 +4,19 @@
 #include <cstdint>
 #include <fstream>
 
-#pragma pack(push, 1) 
-struct BMPFileHeader 
+#pragma pack(push, 1)
+struct BMPFileHeader
 {
-    uint16_t fileType; 
+    uint16_t fileType;
     uint32_t fileSize;
     uint16_t reserved1;
     uint16_t reserved2;
     uint32_t dataOffset;
 };
 
-struct BMPInfoHeader 
+struct BMPInfoHeader
 {
-    uint32_t headerSize;     
+    uint32_t headerSize;
     int32_t width;
     int32_t height;
     uint16_t planes;
@@ -28,9 +28,21 @@ struct BMPInfoHeader
     uint32_t colorsUsed;
     uint32_t importantColors;
 };
-
 #pragma pack(pop)
 
-bool readBMPHeaders(const char* filename, BMPFileHeader& fileHeader, BMPInfoHeader& infoHeader);
+class BMPImage
+{
+public:
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
+    uint8_t* pixelData;
+
+    BMPImage();
+    ~BMPImage();
+
+    bool load(const char* filename);
+    void release();
+    uint32_t calculateMemorySize() const;
+};
 
 #endif
