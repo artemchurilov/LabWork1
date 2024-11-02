@@ -1,3 +1,7 @@
+/* Artem Churilov st130184@student.spbu.ru
+   LabWork1 task "Rotation and Filtering of BMP Image"
+*/
+
 #ifndef GAUSS_H
 #define GAUSS_H
 

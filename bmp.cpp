@@ -1,4 +1,6 @@
-
+/* Artem Churilov st130184@student.spbu.ru
+   LabWork1 task "Rotation and Filtering of BMP Image"
+*/
 
 #include "bmp.h"
 #include <iostream>
