@@ -2,9 +2,9 @@ TARGET = start
 
 CXX = g++
 
-CXXFLAGS = -Wall -Werror -Wpedantic -O2
+CXXFLAGS = -I. -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O2
 
-SRCS = main.cpp bmp.cpp
+SRCS = main.cpp bmp.cpp gauss.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -20,3 +20,5 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 
 .PHONY: all clean
+
+	

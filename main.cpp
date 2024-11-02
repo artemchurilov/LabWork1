@@ -1,19 +1,34 @@
 #include <iostream>
 #include "bmp.h"
+#include "gauss.h"
 
 int main() {
     const char* filename = "input.bmp";
-
     BMPImage image;
     if (image.load(filename)) {
         std::cout << "Program read file" << std::endl;
-
+        GaussianFilter filter(5, 1.0);
+        filter.apply(image);
         BMPImage rotatedClockwise = image.rotate90Clockwise();
-        rotatedClockwise.save("output_clockwise.bmp");
+        if (rotatedClockwise.save("output_rotated_clockwise.bmp"))
+        {
+            std::cout << "Saved rotated clockwise image as output_rotated_clockwise.bmp." << std::endl;
+        }
+        else
+        {
+            std::cerr << "Failed to save the rotated clockwise image." << std::endl;
+        }
         rotatedClockwise.release();
 
         BMPImage rotatedCounterClockwise = image.rotate90CounterClockwise();
-        rotatedCounterClockwise.save("output_counter_clockwise.bmp");
+        if (rotatedCounterClockwise.save("output_rotated_counterclockwise.bmp"))
+        {
+            std::cout << "Saved rotated counterclockwise image as output_rotated_counterclockwise.bmp." << std::endl;
+        }
+        else
+        {
+            std::cerr << "Failed to save the rotated counterclockwise image." << std::endl;
+        }
         rotatedCounterClockwise.release();
 
         image.release();
@@ -23,3 +38,4 @@ int main() {
 
     return 0;
 }
+
