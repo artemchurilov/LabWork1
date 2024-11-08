@@ -31,13 +31,6 @@ struct BMPInfoHeader {
     uint32_t importantColors;
 };
 
-struct Palette {
-    uint8_t green;
-    uint8_t blue;
-    uint8_t red;
-    uint8_t reserved;    
-};
-
 #pragma pack(pop)
 
 class BMPImage {
