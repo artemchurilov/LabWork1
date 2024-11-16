@@ -39,6 +39,9 @@ void GaussianFilter::generateKernel()
 
 void GaussianFilter::apply(BMPImage& image)
 {
+	// Ты можешь так делать только потому что у тебя публичные поля, чего на самом деле быть не должно
+	// Тут есть несколько выходом: сделать эту функцию методом картинки, добавить Геттеры и тут делать 
+	// копию, сделать эту функцию friend. 
     int width = image.infoHeader.width;
     int height = image.infoHeader.height;
     int channels = image.infoHeader.bitsPerPixel / 8;
