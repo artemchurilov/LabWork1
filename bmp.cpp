@@ -32,6 +32,8 @@ bool BMPImage::load(const char* filename)
     file.read(reinterpret_cast<char*>(&infoHeader), sizeof(infoHeader));
 
     uint32_t dataSize = calculateMemorySize();
+    // Старайся избегать явного выделения памяти. Используй умные указатели и стандартные контейнеры
+    // Тут ты молодец, у тебя утечек нет, но в другой раз можно и забыть
     pixelData = new uint8_t[dataSize];
     if (!pixelData)
     {

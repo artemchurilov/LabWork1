@@ -22,7 +22,7 @@ private:
 
     void generateKernel();
 };
-
+// Чтобы функция встраивалась, ее определение должно быть вместе с объявлением в заголовке (
 inline double clamp(double value, double min, double max);
 #endif
 
