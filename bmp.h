@@ -34,6 +34,7 @@ struct BMPInfoHeader {
 #pragma pack(pop)
 
 class BMPImage {
+// Зачем делать это классом, если всё в нем публичное? Спрячь данные и методы, которые не должны быть доступны пользователю в private
 public:
     BMPFileHeader fileHeader;
     BMPInfoHeader infoHeader;
