@@ -9,7 +9,8 @@
 #include <fstream>
 
 #pragma pack(push, 1)
-struct BMPFileHeader {
+struct BMPFileHeader
+{
     uint16_t fileType;
     uint32_t fileSize;
     uint16_t reserved1;
@@ -17,7 +18,8 @@ struct BMPFileHeader {
     uint32_t dataOffset;
 };
 
-struct BMPInfoHeader {
+struct BMPInfoHeader
+{
     uint32_t headerSize;
     int32_t width;
     int32_t height;
@@ -33,12 +35,9 @@ struct BMPInfoHeader {
 
 #pragma pack(pop)
 
-class BMPImage {
+class BMPImage
+{
 public:
-    BMPFileHeader fileHeader;
-    BMPInfoHeader infoHeader;
-    uint8_t* pixelData;
-
     BMPImage();
     ~BMPImage();
 
@@ -46,9 +45,14 @@ public:
     bool save(const char* filename);
     void release();
     uint32_t calculateMemorySize() const;
-
+    const BMPFileHeader& getFileHeader() const;
+    const BMPInfoHeader& getInfoHeader() const;
     BMPImage rotate90Clockwise() const;
     BMPImage rotate90CounterClockwise() const;
+    uint8_t* pixelData;
+private:
+    BMPFileHeader fileHeader;
+    BMPInfoHeader infoHeader;
 };
 
 #endif

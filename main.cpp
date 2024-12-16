@@ -6,15 +6,18 @@
 #include "bmp.h"
 #include "gauss.h"
 
-int main() {
+int main()
+{
     const char* filename = "input.bmp";
     BMPImage image;
-    if (image.load(filename)) {
-    	if (image.infoHeader.bitsPerPixel == 1||image.infoHeader.bitsPerPixel == 4|| image.infoHeader.bitsPerPixel == 8) 
-    	{
-    	    std::cerr <<"Program can't work with Palette. Please trya another picture"<<std::endl;
-    	    return 1;
-    	}
+    if (image.load(filename))
+    {
+        BMPInfoHeader infoHeader=image.getInfoHeader();
+        if (infoHeader.bitsPerPixel == 1||infoHeader.bitsPerPixel == 4|| infoHeader.bitsPerPixel == 8)
+        {
+            std::cerr <<"Program can't work with Palette. Please try another picture"<<std::endl;
+            return 1;
+        }
         std::cout << "Program read file" << std::endl;
         GaussianFilter filter(5, 1.0);
         filter.apply(image);
@@ -41,7 +44,9 @@ int main() {
         rotatedCounterClockwise.release();
 
         image.release();
-    } else {
+    }
+    else
+    {
         std::cerr << "Program didn't read file" << std::endl;
     }
 

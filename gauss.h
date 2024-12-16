@@ -8,7 +8,8 @@
 #include "bmp.h"
 #include <cstdint>
 
-class GaussianFilter {
+class GaussianFilter
+{
 public:
     GaussianFilter(int kernelSize, double sigma);
     ~GaussianFilter();
@@ -26,7 +27,7 @@ private:
 inline double clamp(double value, double min, double max)
 {
     return (value < min) ? min : (value > max) ? max : value;
-}; 
-  
+};
+
 #endif
 

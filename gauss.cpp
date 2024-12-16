@@ -8,12 +8,14 @@
 #include <cstring>
 
 GaussianFilter::GaussianFilter(int kernelSize, double sigma)
-: kernelSize(kernelSize), sigma(sigma) {
+    : kernelSize(kernelSize), sigma(sigma)
+{
     kernel = new double[kernelSize * kernelSize];
     generateKernel();
 }
 
-GaussianFilter::~GaussianFilter() {
+GaussianFilter::~GaussianFilter()
+{
     delete[] kernel;
 }
 
@@ -22,10 +24,12 @@ void GaussianFilter::generateKernel()
     double sum = 0.0;
     int halfSize = kernelSize / 2;
 
-    for (int y = -halfSize; y <= halfSize; ++y) {
-        for (int x = -halfSize; x <= halfSize; ++x) {
+    for (int y = -halfSize; y <= halfSize; ++y)
+    {
+        for (int x = -halfSize; x <= halfSize; ++x)
+        {
             double value = (1.0 / (2.0 * M_PI * sigma * sigma)) *
-                          exp(-(x * x + y * y) / (2.0 * sigma * sigma));
+                           exp(-(x * x + y * y) / (2.0 * sigma * sigma));
             kernel[(y + halfSize) * kernelSize + (x + halfSize)] = value;
             sum += value;
         }
@@ -39,9 +43,10 @@ void GaussianFilter::generateKernel()
 
 void GaussianFilter::apply(BMPImage& image)
 {
-    int width = image.infoHeader.width;
-    int height = image.infoHeader.height;
-    int channels = image.infoHeader.bitsPerPixel / 8;
+    BMPInfoHeader infoHeader=image.getInfoHeader();
+    int width = infoHeader.width;
+    int height = infoHeader.height;
+    int channels = infoHeader.bitsPerPixel / 8;
 
     uint8_t* newPixelData = new uint8_t[width * height * channels];
 
@@ -62,7 +67,8 @@ void GaussianFilter::apply(BMPImage& image)
                     int srcIndex = (srcY * width + srcX) * channels;
                     double weight = kernel[(ky + kernelSize / 2) * kernelSize + (kx + kernelSize / 2)];
 
-                    for (int c = 0; c < channels; ++c) {
+                    for (int c = 0; c < channels; ++c)
+                    {
                         colorSum[c] += image.pixelData[srcIndex + c] * weight;
                     }
                     weightSum += weight;

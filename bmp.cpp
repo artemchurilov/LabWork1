@@ -12,6 +12,15 @@ BMPImage::~BMPImage()
 {
     release();
 }
+const BMPFileHeader& BMPImage::getFileHeader() const
+{
+    return fileHeader;
+}
+
+const BMPInfoHeader& BMPImage::getInfoHeader() const
+{
+    return infoHeader;
+}
 
 bool BMPImage::load(const char* filename)
 {
@@ -105,7 +114,8 @@ BMPImage BMPImage::rotate90Clockwise() const
     return rotatedImage;
 }
 
-BMPImage BMPImage::rotate90CounterClockwise() const {
+BMPImage BMPImage::rotate90CounterClockwise() const
+{
     BMPImage rotatedImage;
 
     rotatedImage.infoHeader = infoHeader;
