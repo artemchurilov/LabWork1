@@ -23,6 +23,10 @@ private:
     void generateKernel();
 };
 
-inline double clamp(double value, double min, double max);
+inline double clamp(double value, double min, double max)
+{
+    return (value < min) ? min : (value > max) ? max : value;
+}; 
+  
 #endif
 
