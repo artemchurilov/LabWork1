@@ -2,7 +2,7 @@ TARGET = start
 
 CXX = g++
 
-CXXFLAGS = -I. -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O2
+CXXFLAGS = -I. -fopenmp -O3 -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O2
 
 SRCS = main.cpp bmp.cpp gauss.cpp
 

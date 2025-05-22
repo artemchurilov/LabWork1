@@ -5,6 +5,7 @@
 #include <iostream>
 #include "bmp.h"
 #include "gauss.h"
+#include <chrono>
 
 int main()
 {
@@ -21,6 +22,12 @@ int main()
         std::cout << "Program read file" << std::endl;
         GaussianFilter filter(5, 1.0);
         filter.apply(image);
+
+
+        auto start = std::chrono::high_resolution_clock::now();
+        BMPImage rotated = image.rotate90Clockwise();
+        auto end = std::chrono::high_resolution_clock::now();
+
         BMPImage rotatedClockwise = image.rotate90Clockwise();
         if (rotatedClockwise.save("output_rotated_clockwise.bmp"))
         {
@@ -44,7 +51,10 @@ int main()
         rotatedCounterClockwise.release();
 
         image.release();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::cout << "Rotation time: " << duration.count() << " ms" << std::endl;
     }
+
     else
     {
         std::cerr << "Program didn't read file" << std::endl;

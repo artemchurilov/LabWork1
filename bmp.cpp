@@ -99,7 +99,7 @@ BMPImage BMPImage::rotate90Clockwise() const
     rotatedImage.pixelData = new uint8_t[dataSize];
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
-
+    #pragma omp parallel for collapse(2)  
     for (int y = 0; y < infoHeader.height; ++y)
     {
         for (int x = 0; x < infoHeader.width; ++x)
@@ -129,7 +129,7 @@ BMPImage BMPImage::rotate90CounterClockwise() const
     rotatedImage.pixelData = new uint8_t[dataSize];
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
-
+    #pragma omp parallel for collapse(2)
     for (int y = 0; y < infoHeader.height; ++y)
     {
         for (int x = 0; x < infoHeader.width; ++x)
