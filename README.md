@@ -1,4 +1,4 @@
-# LabWork1 - Magic with BMP - files
+# LabWork4 - Parallel
 
 ## Author
 Чурилов Артём Валерьевич, группа 24.Б82-мм
@@ -7,8 +7,8 @@ st130184@student.spbu.ru
 ## Build
 
 <par> make </par>
-
+<par> make tests</par>
 ## Run
 
-<par> ./start </par>
-
+<par> ./prog </par>
+<par> ./test-prog </par>

@@ -46,6 +46,6 @@ TEST(MainTest, SpeedTest)
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
     
-    EXPECT_EQ(duration.count()-newduration.count(),8);
+    EXPECT_TRUE(duration.count()-newduration.count()>0);
 }
 
