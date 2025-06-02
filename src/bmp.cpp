@@ -1,8 +1,8 @@
 /* Artem Churilov st130184@student.spbu.ru
-   LabWork1 task "Rotation and Filtering of BMP Image"
+   LabWork4 task "Paralleling of Rotation and Filtering of BMP Image"
 */
 
-#include "bmp.h"
+#include "../include/bmp.h"
 #include <iostream>
 #include <cstring>
 
@@ -99,6 +99,68 @@ BMPImage BMPImage::rotate90Clockwise() const
     rotatedImage.pixelData = new uint8_t[dataSize];
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
+  
+    for (int y = 0; y < infoHeader.height; ++y)
+    {
+        for (int x = 0; x < infoHeader.width; ++x)
+        {
+            int srcIndex = y * rowSize + x * (infoHeader.bitsPerPixel / 8);
+            int dstIndex = x * newRowSize + (rotatedImage.infoHeader.width-y-1) * (infoHeader.bitsPerPixel / 8);
+
+            std::memcpy(&rotatedImage.pixelData[dstIndex], &pixelData[srcIndex], infoHeader.bitsPerPixel / 8);
+        }
+    }
+
+    return rotatedImage;
+}
+
+BMPImage BMPImage::newRotate90CounterClockwise() const
+{
+    BMPImage rotatedImage;
+
+    rotatedImage.infoHeader = infoHeader;
+    rotatedImage.infoHeader.width = infoHeader.height;
+    rotatedImage.infoHeader.height = infoHeader.width;
+
+    uint32_t rowSize = ((infoHeader.bitsPerPixel * infoHeader.width + 3) / 32) * 4;
+    uint32_t newRowSize = ((infoHeader.bitsPerPixel * rotatedImage.infoHeader.width + 31) / 32) * 4;
+    uint32_t dataSize = newRowSize * rotatedImage.infoHeader.height;
+
+    rotatedImage.pixelData = new uint8_t[dataSize];
+    rotatedImage.fileHeader = fileHeader;
+    rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
+
+
+    for (int y = 0; y < infoHeader.height; ++y)
+    {
+        for (int x = 0; x < infoHeader.width; ++x)
+        {
+            int srcIndex = y * rowSize + x * (infoHeader.bitsPerPixel / 8);
+            int dstIndex = (rotatedImage.infoHeader.height - x - 1) * newRowSize + y * (infoHeader.bitsPerPixel / 8);
+
+            std::memcpy(&rotatedImage.pixelData[dstIndex], &pixelData[srcIndex], infoHeader.bitsPerPixel / 8);
+        }
+    }
+
+    return rotatedImage;
+}
+
+
+BMPImage BMPImage::newRotate90Clockwise() const
+{
+    BMPImage rotatedImage;
+
+    rotatedImage.infoHeader = infoHeader;
+    rotatedImage.infoHeader.width = infoHeader.height;
+    rotatedImage.infoHeader.height = infoHeader.width;
+
+    uint32_t rowSize = ((infoHeader.bitsPerPixel * infoHeader.width + 3) / 32) * 4;
+    uint32_t newRowSize = ((infoHeader.bitsPerPixel * rotatedImage.infoHeader.width + 31) / 32) * 4;
+    uint32_t dataSize = newRowSize * rotatedImage.infoHeader.height;
+
+    rotatedImage.pixelData = new uint8_t[dataSize];
+    rotatedImage.fileHeader = fileHeader;
+    rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
     #pragma omp parallel for collapse(2)  
     for (int y = 0; y < infoHeader.height; ++y)
     {
@@ -129,6 +191,7 @@ BMPImage BMPImage::rotate90CounterClockwise() const
     rotatedImage.pixelData = new uint8_t[dataSize];
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
+
     #pragma omp parallel for collapse(2)
     for (int y = 0; y < infoHeader.height; ++y)
     {

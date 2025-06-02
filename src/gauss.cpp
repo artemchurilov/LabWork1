@@ -1,8 +1,8 @@
 /* Artem Churilov st130184@student.spbu.ru
-   LabWork1 task "Rotation and Filtering of BMP Image"
+   LabWork4 task "Paralleling of Rotation and Filtering of BMP Image"
 */
 
-#include "gauss.h"
+#include "../include/gauss.h"
 #include <iostream>
 #include <cmath>
 #include <cstring>

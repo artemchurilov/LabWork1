@@ -1,5 +1,5 @@
 /* Artem Churilov st130184@student.spbu.ru
-   LabWork1 task "Rotation and Filtering of BMP Image"
+   LabWork4 task "Paralleling of Rotation and Filtering of BMP Image"
 */
 
 #ifndef BMP_H
@@ -49,6 +49,8 @@ public:
     const BMPInfoHeader& getInfoHeader() const;
     BMPImage rotate90Clockwise() const;
     BMPImage rotate90CounterClockwise() const;
+    BMPImage newRotate90Clockwise() const;
+    BMPImage newRotate90CounterClockwise() const;
     uint8_t* pixelData;
 private:
     BMPFileHeader fileHeader;
