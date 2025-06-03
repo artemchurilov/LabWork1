@@ -2,7 +2,7 @@ TARGET = prog
 
 CXX = g++
 
-CXXFLAGS = -I. -fopenmp -O3 -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O2
+CXXFLAGS = -I. -fopenmp -O3 -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O3
 LDFLAGS = -lm
 
 TARGET = prog
