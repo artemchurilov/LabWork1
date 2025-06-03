@@ -46,7 +46,7 @@ TEST(MainTest, SpeedTest)
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
         std::cout<<(duration.count()-newduration.count())<<"\n";
-    
+        std::cout<<(float(duration.count())/float(newduration.count()))<<"\n";
     EXPECT_TRUE(duration.count()-newduration.count()>0);
 }
 
@@ -59,14 +59,15 @@ TEST(MainTest, GaussTest)
 
         std::cout << "Program read file" << std::endl;
         GaussianFilter filter(5, 1.0);
+        auto start = std::chrono::high_resolution_clock::now();
+        filter.apply(image);
+        auto end = std::chrono::high_resolution_clock::now();
 
         auto newstart = std::chrono::high_resolution_clock::now();
         filter.newApply(image);
         auto newend = std::chrono::high_resolution_clock::now();
 
-        auto start = std::chrono::high_resolution_clock::now();
-        filter.apply(image);
-        auto end = std::chrono::high_resolution_clock::now();
+
 
 
 
@@ -74,7 +75,7 @@ TEST(MainTest, GaussTest)
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
         std::cout<<(duration.count()-newduration.count())<<"\n";
-    
+        std::cout<<(float(duration.count())/float(newduration.count()))<<"\n";
     EXPECT_TRUE(duration.count()-newduration.count()>0);
 }
 
@@ -110,6 +111,6 @@ TEST(MainTest, FinalTest)
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
         std::cout<<(duration.count()-newduration.count())<<"\n";
-    
+        std::cout<<(float(duration.count())/float(newduration.count()))<<"\n";
     EXPECT_TRUE(duration.count()-newduration.count()>0);
 }
