@@ -78,3 +78,38 @@ TEST(MainTest, GaussTest)
     EXPECT_TRUE(duration.count()-newduration.count()>0);
 }
 
+TEST(MainTest, FinalTest)
+{
+    const char* filename = "input.bmp";
+    BMPImage image;
+    image.load(filename);
+    
+
+        std::cout << "Program read file" << std::endl;
+        GaussianFilter filter(5, 1.0);
+
+        auto newstart = std::chrono::high_resolution_clock::now();
+        filter.newApply(image);
+        BMPImage newrotatedClockwise = image.newRotate90Clockwise();
+        BMPImage newrotatedCounterClockwise = image.newRotate90CounterClockwise();
+        auto newend = std::chrono::high_resolution_clock::now();
+
+        auto start = std::chrono::high_resolution_clock::now();
+        filter.apply(image);
+        BMPImage rotatedCounterClockwise = image.rotate90CounterClockwise();
+        BMPImage rotatedClockwise = image.rotate90Clockwise();
+        auto end = std::chrono::high_resolution_clock::now();
+
+        rotatedClockwise.release();
+        newrotatedClockwise.release();
+
+        rotatedCounterClockwise.release();
+        newrotatedCounterClockwise.release();
+
+        image.release();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
+        std::cout<<(duration.count()-newduration.count())<<"\n";
+    
+    EXPECT_TRUE(duration.count()-newduration.count()>0);
+}
