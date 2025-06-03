@@ -1,0 +1,9 @@
+# Minimal Doxyfile configuration
+PROJECT_NAME           = "Image Parallelization"
+OUTPUT_DIRECTORY       = doc
+INPUT                  = include/ src/
+RECURSIVE              = YES
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+EXTRACT_ALL            = YES
+QUIET                  = YES
