@@ -114,7 +114,7 @@ BMPImage BMPImage::rotate90Clockwise() const
     return rotatedImage;
 }
 
-BMPImage BMPImage::newRotate90CounterClockwise() const
+BMPImage BMPImage::rotate90CounterClockwise() const
 {
     BMPImage rotatedImage;
 
@@ -161,7 +161,7 @@ BMPImage BMPImage::newRotate90Clockwise() const
     rotatedImage.pixelData = new uint8_t[dataSize];
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
-    #pragma omp parallel for collapse(2)  
+    #pragma omp parallel for 
     for (int y = 0; y < infoHeader.height; ++y)
     {
         for (int x = 0; x < infoHeader.width; ++x)
@@ -176,7 +176,7 @@ BMPImage BMPImage::newRotate90Clockwise() const
     return rotatedImage;
 }
 
-BMPImage BMPImage::rotate90CounterClockwise() const
+BMPImage BMPImage::newRotate90CounterClockwise() const
 {
     BMPImage rotatedImage;
 
@@ -192,7 +192,7 @@ BMPImage BMPImage::rotate90CounterClockwise() const
     rotatedImage.fileHeader = fileHeader;
     rotatedImage.fileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + dataSize;
 
-    #pragma omp parallel for collapse(2)
+    #pragma omp parallel for
     for (int y = 0; y < infoHeader.height; ++y)
     {
         for (int x = 0; x < infoHeader.width; ++x)
