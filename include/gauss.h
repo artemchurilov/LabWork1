@@ -15,6 +15,7 @@ public:
     ~GaussianFilter();
 
     void apply(BMPImage& image);
+    void newApply(BMPImage& image);
 
 private:
     double* kernel;

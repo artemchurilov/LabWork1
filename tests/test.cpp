@@ -45,6 +45,35 @@ TEST(MainTest, SpeedTest)
         image.release();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
         auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
+        std::cout<<(duration.count()-newduration.count())<<"\n";
+    
+    EXPECT_TRUE(duration.count()-newduration.count()>0);
+}
+
+TEST(MainTest, GaussTest)
+{
+    const char* filename = "input.bmp";
+    BMPImage image;
+    image.load(filename);
+    
+
+        std::cout << "Program read file" << std::endl;
+        GaussianFilter filter(5, 1.0);
+
+        auto newstart = std::chrono::high_resolution_clock::now();
+        filter.newApply(image);
+        auto newend = std::chrono::high_resolution_clock::now();
+
+        auto start = std::chrono::high_resolution_clock::now();
+        filter.apply(image);
+        auto end = std::chrono::high_resolution_clock::now();
+
+
+
+        image.release();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        auto newduration = std::chrono::duration_cast<std::chrono::milliseconds>(newend - newstart);
+        std::cout<<(duration.count()-newduration.count())<<"\n";
     
     EXPECT_TRUE(duration.count()-newduration.count()>0);
 }

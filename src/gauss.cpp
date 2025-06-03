@@ -41,6 +41,7 @@ void GaussianFilter::generateKernel()
     }
 }
 
+
 void GaussianFilter::apply(BMPImage& image)
 {
     BMPInfoHeader infoHeader=image.getInfoHeader();
@@ -57,15 +58,64 @@ void GaussianFilter::apply(BMPImage& image)
             double colorSum[3] = {0.0};
             double weightSum = 0.0;
 
-            for (int ky = -kernelSize / 2; ky <= kernelSize / 2; ++ky)
+            for (int ky = -kernelSize/2; ky <= kernelSize/2; ++ky)
             {
-                for (int kx = -kernelSize / 2; kx <= kernelSize / 2; ++kx)
+                for (int kx = -kernelSize/2; kx <= kernelSize/2; ++kx)
                 {
                     int srcX = clamp(x + kx, 0, width - 1);
                     int srcY = clamp(y + ky, 0, height - 1);
 
                     int srcIndex = (srcY * width + srcX) * channels;
-                    double weight = kernel[(ky + kernelSize / 2) * kernelSize + (kx + kernelSize / 2)];
+                    double weight = kernel[(ky + kernelSize/2) * kernelSize + (kx + kernelSize/2)];
+
+                    for (int c = 0; c < channels; ++c)
+                    {
+                        colorSum[c] += image.pixelData[srcIndex + c] * weight;
+                    }
+                    weightSum += weight;
+                }
+            }
+
+            int dstIndex = (y * width + x) * channels;
+            for (int c = 0; c < channels; ++c)
+            {
+                newPixelData[dstIndex + c] = static_cast<uint8_t>(clamp(colorSum[c], 0.0, 255.0));
+            }
+        }
+    }
+
+    delete[] image.pixelData;
+    image.pixelData = newPixelData;
+}
+
+
+
+void GaussianFilter::newApply(BMPImage& image)
+{
+    BMPInfoHeader infoHeader=image.getInfoHeader();
+    int width = infoHeader.width;
+    int height = infoHeader.height;
+    int channels = infoHeader.bitsPerPixel / 8;
+
+    uint8_t* newPixelData = new uint8_t[width * height * channels];
+    const int halfKernel = kernelSize/2;
+    #pragma omp parallel for
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            double colorSum[3] = {0.0};
+            double weightSum = 0.0;
+
+            for (int ky = -halfKernel; ky <= halfKernel; ++ky)
+            {
+                for (int kx = -halfKernel; kx <= halfKernel; ++kx)
+                {
+                    int srcX = clamp(x + kx, 0, width - 1);
+                    int srcY = clamp(y + ky, 0, height - 1);
+
+                    int srcIndex = (srcY * width + srcX) * channels;
+                    double weight = kernel[(ky + halfKernel) * kernelSize + (kx + halfKernel)];
 
                     for (int c = 0; c < channels; ++c)
                     {
