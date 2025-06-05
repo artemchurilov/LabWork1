@@ -2,8 +2,8 @@ TARGET = prog
 
 CXX = g++
 
-CXXFLAGS = -I. -fopenmp -O3 -std=c++17 -g -fPIC -Wall -Werror -Wpedantic -O3
-LDFLAGS = -lm
+CXXFLAGS = -I. -fopenmp -O3 -std=c++17 -g -fPIC -Wall -Werror -Wpedantic 
+LDFLAGS = -lm -fopenmp
 
 TARGET = prog
 LIBPROJECT = lib$(TARGET).a
