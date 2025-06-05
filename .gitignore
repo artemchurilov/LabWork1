@@ -1,0 +1,6 @@
+prog
+*.bmp
+*.o
+*.d
+*.a
+test-prog
